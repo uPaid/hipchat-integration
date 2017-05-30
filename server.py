@@ -3,7 +3,6 @@ import importlib.util
 import json
 import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from json.decoder import JSONDecodeError
 from re import search
 
 from notification import Notification
@@ -19,7 +18,7 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
 
         try:
             notification = Notification(**(json.loads(post_data)))
-        except JSONDecodeError as e:
+        except Exception as e:
             self.log_error("Exception was thrown: %s", e)
             self.send_response(400)
             return
