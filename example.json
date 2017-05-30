@@ -1,0 +1,37 @@
+{
+    "event":"room_message",
+    "item":{
+        "message":{
+            "date":"2017-05-30T17:14:12.417069+00:00",
+            "from":{
+                "id":123,
+                "links":{
+                    "self":"https://api.hipchat.com/v2/user/123"
+                },
+                "mention_name":"Examp\u0142eName",
+                "name":"Examp\u0142e Name",
+                "version":"4IA56R7S"
+            },
+            "id":"00000000-0000-0000-0000-000000000000",
+            "mentions":[
+
+            ],
+            "message":"/test testing me",
+            "type":"message"
+        },
+        "room":{
+            "id":123,
+            "is_archived":false,
+            "links":{
+                "participants":"https://api.hipchat.com/v2/room/123/participant",
+                "self":"https://api.hipchat.com/v2/room/123",
+                "webhooks":"https://api.hipchat.com/v2/room/123/webhook"
+            },
+            "name":"TestRoom",
+            "privacy":"public",
+            "version":"DZFEFH1G"
+        }
+    },
+    "oauth_client_id":"00000000-0000-0000-0000-000000000000",
+    "webhook_id":123
+}
