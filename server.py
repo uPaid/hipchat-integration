@@ -6,10 +6,14 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from re import search
 
 from notification import Notification
-from threads import async
 
-port = int(sys.argv[1])
-integrations_path = sys.argv[2]
+try:
+    port = int(sys.argv[1])
+    integrations_path = sys.argv[2]
+    integration_token = sys.argv[3]
+except IndexError:
+    print("Usage: python3 '" + sys.argv[0] + "' [PORT] [INTEGRATIONS_PATH] [INTEGRATION_TOKEN]")
+    exit(1)
 
 
 class HipChatRequestHandler(BaseHTTPRequestHandler):
@@ -26,16 +30,15 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
         self.log_message("Processing message from " + notification.item.message.sender.name)
         self.log_message("Message contents: " + notification.item.message.content)
 
+        self.send_response(204)
         self.run_integration(notification)
 
-        self.send_response(204)
         return
 
     def get_post_data(self):
         content_length = int(self.headers['Content-Length'])
         return str(self.rfile.read(content_length), "UTF-8")
 
-    @async
     def run_integration(self, notification: Notification):
         matcher = search(r'/(\S*) (.*)', notification.item.message.content)
         integration_name = matcher.group(1)
@@ -51,7 +54,7 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
             self.log_error("Integration '" + integration_name + "' could not be found")
             return
 
-        integration_module.run_integration(notification, integration_query)
+        integration_module.run_integration(notification, integration_query, integration_token)
 
 
 def run_server():

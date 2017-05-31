@@ -102,3 +102,4 @@ ENV/
 
 # Intellij Idea
 .idea/
+/hipchat-integration.zip

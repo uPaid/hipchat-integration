@@ -14,7 +14,7 @@ def run_integration(notification: Notification, query: str, integration_token: s
 
     room = notification.item.room.id
 
-    upload_file(token=integration_token, room=room, message="Test message",
+    upload_file(token="7CvE3Ur4aGD8SLMpzFxDq1Y8qzHh2wDk60FJm4H7", room=room, message="Test message",
                 file="/tmp/test.tmp")
     send_notification(token=integration_token, room=room, sender=integration_name, message=query)
     send_message(token=integration_token, room=room, message=query)
