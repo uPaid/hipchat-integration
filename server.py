@@ -44,7 +44,7 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
         return str(self.rfile.read(content_length), "UTF-8")
 
     def run_integration(self, notification: Notification):
-        matcher = search(r'/(\S*) (.*)', notification.item.message.content)
+        matcher = search(r'/(\S*) ?(.*)', notification.item.message.content)
         integration_name = matcher.group(1)
         integration_query = matcher.group(2)
         integration_path = integrations_path + "/" + integration_name + ".py"
