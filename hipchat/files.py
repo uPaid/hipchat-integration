@@ -24,7 +24,7 @@ Content-Disposition: attachment; name="metadata"
 Content-Disposition: attachment; name="file"; filename="{1}"
 {2}
 --boundary123456--\
-""".format(msg, os.path.basename(file), open(file, 'rb').read())
+""".format(msg, os.path.basename(file), open(file, 'r').read())
 
     response = requests.post(url, headers=headers, data=payload)
     response.raise_for_status()
