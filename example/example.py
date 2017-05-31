@@ -4,10 +4,13 @@ from hipchat.notifications import send_notification
 from notification import Notification
 
 
-def run_integration(notification: Notification, query: str, integration_token: str):
+def run_integration(notification: Notification, query: str, integration_tokens: dict):
     integration_name = __name__
 
     print("Running integration: " + integration_name)
+
+    integration_token = integration_tokens["example"]
+    print("Token: " + integration_token)
     print("Sender name: " + notification.item.message.sender.name)
     print("Message contents: " + notification.item.message.content)
     print("Query: " + query)

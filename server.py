@@ -10,9 +10,13 @@ from notification import Notification
 try:
     port = int(sys.argv[1])
     integrations_path = sys.argv[2]
-    integration_token = sys.argv[3]
+    tokens_from_args = sys.argv[3:]
+    integration_tokens = dict()
+    for token in tokens_from_args:
+        token_split = token.split(":")
+        integration_tokens[token_split[0]] = token_split[1]
 except IndexError:
-    print("Usage: python3 '" + sys.argv[0] + "' [PORT] [INTEGRATIONS_PATH] [INTEGRATION_TOKEN]")
+    print("Usage: python3 '" + sys.argv[0] + "' [PORT] [INTEGRATIONS_PATH] [INTEGRATION_NAME:INTEGRATION_TOKEN...]")
     exit(1)
 
 
@@ -54,7 +58,7 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
             self.log_error("Integration '" + integration_name + "' could not be found")
             return
 
-        integration_module.run_integration(notification, integration_query, integration_token)
+        integration_module.run_integration(notification, integration_query, integration_tokens)
 
 
 def run_server():
