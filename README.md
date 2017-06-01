@@ -137,13 +137,16 @@ Example:
 ### Configuration in the HipChat UI
 
 You can configure your integration with just a few easy steps:
-1. go to https://upaid.hipchat.com/addons
-2. select your room
-3. click "Build your own integration"
-4. give a name to your integration
-5. add a slash command to your integration
+1. go to https://hipchat.com/addons
+2. log in
+3. select your room
+4. click "Build your own integration"
+5. give a name to your integration
+6. add a slash command to your integration
  * enter the name of your command, for example `/test`
  * add the url to your server, for example `http://my.server.com:8000`
-6. press *Save*
+7. press *Save*
+
+![screenshot1](http://i.imgur.com/gaTWxlG.png)
 
 All you have to do now is create your integration script, for example *integrations/test.py* and run the application with the token provided by HipChat.
