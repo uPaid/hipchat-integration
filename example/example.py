@@ -2,24 +2,25 @@ from hipchat.files import upload_file
 from hipchat.messages import send_message
 from hipchat.notifications import send_notification
 from notification import Notification
+from server import Logger
 
 
-def run_integration(notification: Notification, query: str, integration_tokens: dict):
-    integration_name = __name__
+def run_integration(notification: Notification, query: str, all_tokens: dict, token: str, storage: dict, log: Logger):
+    log.info("Running integration: %s" % __name__)
+    log.info("Sender name: %s" % notification.item.message.sender.name)
+    log.info("Message contents: %s" % notification.item.message.content)
+    log.info("Query: %s" % query)
 
-    print("Running integration: " + integration_name)
+    storage[len(storage)] = query  # Saves data to integration's volatile storage
 
-    integration_token = integration_tokens["example"]
-    print("Token: " + integration_token)
-    print("Sender name: " + notification.item.message.sender.name)
-    print("Message contents: " + notification.item.message.content)
-    print("Query: " + query)
+    room = notification.item.room.id  # Retrieves numerical room ID from the request
 
-    room = notification.item.room.id
+    try:
+        file_token = all_tokens["file_uploader"]  # Retrieves a global token
+        upload_file(token=file_token, room=room, message="Test message", file="/tmp/test.tmp")  # Uploads file to room
+        send_notification(token=token, room=room, sender=__name__, message=query)  # Sends notification to room
+        send_message(token=token, room=room, message=query)  # Sends message to room
+    except Exception as e:
+        log.error("Whoops! Exception: " + str(e))
 
-    upload_file(token=integration_token, room=room, message="Test message",
-                file="/tmp/test.tmp")
-    send_notification(token=integration_token, room=room, sender=integration_name, message=query)
-    send_message(token=integration_token, room=room, message=query)
-
-    print("Running integration done!")
+    log.info("Running integration done!")
