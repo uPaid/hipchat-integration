@@ -17,14 +17,16 @@ try:
         token_split = token.split(":")
 
         token_id = token_split[0]
-        if token_id in integration_tokens:
-            raise ValueError("Duplicate token / room name: " + token_id)
-
         if len(token_split) == 2:  # Global token in format name:value
+            if token_id in integration_tokens:
+                raise ValueError("Duplicate token name: " + token_id)
             integration_tokens[token_id] = token_split[1]
+
         elif len(token_split) == 3:  # Room-specific token in format room:name:value
             if token_id not in integration_tokens:
                 integration_tokens[token_id] = dict()
+            if token_split[1] in integration_tokens[token_id]:
+                raise ValueError("Duplicate token name: " + token_id + " for room " + token_id)
             integration_tokens[token_id][token_split[1]] = token_split[2]
 
 except IndexError:
