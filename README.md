@@ -143,8 +143,8 @@ You can configure your integration with just a few easy steps:
 4. click "Build your own integration"
 5. give a name to your integration
 6. add a slash command to your integration
-  * enter the name of your command, for example `/test`
-  * add the url to your server, for example `http://my.server.com:8000`
+  1. enter the name of your command, for example `/test`
+  2. add the url to your server, for example `http://my.server.com:8000`
 7. press *Save*
 
 ![screenshot1](http://i.imgur.com/gaTWxlG.png)
