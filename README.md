@@ -137,15 +137,15 @@ Example:
 ### Configuration in the HipChat UI
 
 You can configure your integration with just a few easy steps:
-1. go to https://hipchat.com/addons
-2. log in
-3. select your room
-4. click "Build your own integration"
-5. give a name to your integration
-6. add a slash command to your integration
-  1. enter the name of your command, for example `/test`
-  2. add the url to your server, for example `http://my.server.com:8000`
-7. press *Save*
+* go to https://hipchat.com/addons
+* log in
+* select your room
+* click "Build your own integration"
+* give a name to your integration
+* add a slash command to your integration
+  * enter the name of your command, for example `/test`
+  * add the url to your server, for example `http://my.server.com:8000`
+* press *Save*
 
 ![screenshot1](http://i.imgur.com/gaTWxlG.png)
 
