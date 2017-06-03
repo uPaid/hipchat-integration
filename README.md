@@ -25,14 +25,14 @@ The application requires following dependencies:
 
 * [Python version 3.5+](https://www.python.org/downloads/)
 * Python packages:
- * [http](https://docs.python.org/3/library/http.server.html) as a base for application
- * [importlib](https://docs.python.org/3/library/importlib.html) for dynamic calls to integrations
- * [requests](http://docs.python-requests.org/en/master/) for sending data to HipChat server
- * [json](https://docs.python.org/2/library/json.html) for serialization
- * [re](https://docs.python.org/2/library/re.html) for regex matching
- * [threading](https://docs.python.org/2/library/threading.html) to run integrations in parallel
+  * [http](https://docs.python.org/3/library/http.server.html) as a base for application
+  * [importlib](https://docs.python.org/3/library/importlib.html) for dynamic calls to integrations
+  * [requests](http://docs.python-requests.org/en/master/) for sending data to HipChat server
+  * [json](https://docs.python.org/2/library/json.html) for serialization
+  * [re](https://docs.python.org/2/library/re.html) for regex matching
+  * [threading](https://docs.python.org/2/library/threading.html) to run integrations in parallel
 * [zlib](https://docs.python.org/2/library/zlib.html) (optional) for easy application deployment
- * note that installation is tricky, see [this link](https://stackoverflow.com/a/15013895/5922757) for more info
+  * note that installation is tricky, see [this link](https://stackoverflow.com/a/15013895/5922757) for more info
 
 ### Deployment
 
@@ -65,8 +65,8 @@ Arguments must be provided in the following order:
 * **PORT** - the port for application to listen on
 * **INTEGRATIONS_PATH** - the path where integrations scripts are stored at
 * **INTEGRATION_NAME:INTEGRATION_TOKEN...** - a list of tokens in one of the following formats:
- * **TOKEN_NAME:TOKEN_VALUE** - a global token
- * **ROOM_ID:INTEGRATION_NAME:TOKEN_VALUE** - integration-specific token (*ROOM_ID* must be numerical)
+  * **TOKEN_NAME:TOKEN_VALUE** - a global token
+  * **ROOM_ID:INTEGRATION_NAME:TOKEN_VALUE** - integration-specific token (*ROOM_ID* must be numerical)
 
 For more details please refer to the [HipChat dokumentation on tokens](https://developer.atlassian.com/hipchat/guide/hipchat-rest-api/api-access-tokens).
 
@@ -82,8 +82,8 @@ The application will:
 * listen on port 8000
 * look for available integrations in directory *integrations*
 * store two tokens:
- * token assigned to a room with if *1234* and integration *test* in that room
- * global token called *send_message*
+  * token assigned to a room with if *1234* and integration *test* in that room
+  * global token called *send_message*
 
 ## Building your own integration:
 
@@ -94,12 +94,12 @@ The integration must follow the rules below:
 * must be a Python script with name ending with *.py*
 * must be interpretable by Python interpreter in version 3.5 or higher
 * must define a **run_integration** function with the following arguments:
- * **notification** *(notification.Notification)* - the [object sent by HipChat API](https://www.hipchat.com/docs/apiv2/webhooks#room_message)
- * **query** *(str)* - integration command's contents
- * **all_tokens** *(dict)* - all tokens passed to the application
- * **token** *(str)* - token for the current
- * **storage** *(dict)* - volatile, integration-specific storage that can be used to persist data (note that it is kept in memory and will be erased if the application is killed, please refer to the [data persistance](#data-persistance) section of this manual for more details)
- * **log** *(server.Logger)* - a utility that can be used for printing the output in place of the *print()* function
+  * **notification** *(notification.Notification)* - the [object sent by HipChat API](https://www.hipchat.com/docs/apiv2/webhooks#room_message)
+  * **query** *(str)* - integration command's contents
+  * **all_tokens** *(dict)* - all tokens passed to the application
+  * **token** *(str)* - token for the current
+  * **storage** *(dict)* - volatile, integration-specific storage that can be used to persist data (note that it is kept in memory and will be erased if the application is killed, please refer to the [data persistance](#data-persistance) section of this manual for more details)
+  * **log** *(server.Logger)* - a utility that can be used for printing the output in place of the *print()* function
 
 ### Example integration
 
@@ -143,8 +143,8 @@ You can configure your integration with just a few easy steps:
 4. click "Build your own integration"
 5. give a name to your integration
 6. add a slash command to your integration
- * enter the name of your command, for example `/test`
- * add the url to your server, for example `http://my.server.com:8000`
+  * enter the name of your command, for example `/test`
+  * add the url to your server, for example `http://my.server.com:8000`
 7. press *Save*
 
 ![screenshot1](http://i.imgur.com/gaTWxlG.png)
