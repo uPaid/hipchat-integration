@@ -70,7 +70,7 @@ Arguments must be provided in the following order:
 
 For more details please refer to the [HipChat dokumentation on tokens](https://developer.atlassian.com/hipchat/guide/hipchat-rest-api/api-access-tokens).
 
-#### Example:
+#### Example
 
 ```bash
 python3 hipchat-integration.zip 8000 ./integrations \
@@ -85,7 +85,7 @@ The application will:
   * token assigned to a room with if *1234* and integration *test* in that room
   * global token called *send_message*
 
-## Building your own integration:
+## Building your own integration
 
 ### Rules
 
