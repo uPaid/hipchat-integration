@@ -3,6 +3,8 @@ import os
 
 import requests
 
+DEFAULT_HIPCHAT_FILE_ENCODING = "utf-8"
+
 
 def upload_file(token: str, room: str, file: str, message='', host: str = 'api.hipchat.com'):
     if not os.path.isfile(file):
@@ -24,7 +26,8 @@ Content-Disposition: attachment; name="metadata"
 Content-Disposition: attachment; name="file"; filename="{1}"
 {2}
 --boundary123456--\
-""".format(msg, os.path.basename(file), open(file, 'r').read())
+""".format(msg, os.path.basename(file), open(file, 'r', encoding=DEFAULT_HIPCHAT_FILE_ENCODING).read()) \
+        .encode(DEFAULT_HIPCHAT_FILE_ENCODING)
 
     response = requests.post(url, headers=headers, data=payload)
     response.raise_for_status()
