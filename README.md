@@ -97,7 +97,7 @@ The integration must follow the rules below:
   * **notification** *(notification.Notification)* - the [object sent by HipChat API](https://www.hipchat.com/docs/apiv2/webhooks#room_message)
   * **query** *(str)* - integration command's contents
   * **all_tokens** *(dict)* - all tokens passed to the application
-  * **token** *(str)* - token for the current
+  * **token** *(str)* - token for the current room (room in which slashcommand was executed)
   * **storage** *(dict)* - volatile, integration-specific storage that can be used to persist data (note that it is kept in memory and will be erased if the application is killed, please refer to the [data persistance](#data-persistance) section of this manual for more details)
   * **log** *(server.Logger)* - a utility that can be used for printing the output in place of the *print()* function
 
