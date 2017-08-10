@@ -114,7 +114,9 @@ To put a variable in the storage, call `storage[key] = variable` from your integ
 
 To retrieve a variable from the storage, call `variable = storage[key]` from your integration.
 
-Keep in mind that if the is is not found in the storage, a `KeyError` will be raised.
+Storages are created per integration, so you don't have to worry about conflicting keys.
+
+Keep in mind that if the data is not found in the storage, a `KeyError` will be raised.
 
 #### Saving and loading the storage
 
