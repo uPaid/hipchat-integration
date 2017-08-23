@@ -48,7 +48,7 @@ class Logger:
 
 
 class HipChatRequestHandler(BaseHTTPRequestHandler):
-    STORAGE = dict()
+    __STORAGE = dict()
 
     def log_message(self, format, *args):  # We want to log messages to stdout instead of stderr
         sys.stdout.write("%s - - [%s] %s\n" %
@@ -63,19 +63,19 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
             file_name = post_data[5:]
             self.log_message("Writing storage to file " + file_name)
             with open(file_name, 'w') as file:
-                file.write(json.dumps(HipChatRequestHandler.STORAGE))
+                file.write(json.dumps(HipChatRequestHandler.__STORAGE, indent=4))
             return
 
         if post_data[0:4] == "load":  # Read storage from file
             file_name = post_data[5:]
             self.log_message("Loading storage from file " + file_name)
             with open(file_name, 'r') as file:
-                HipChatRequestHandler.STORAGE = json.loads(" ".join(file.readlines()))
+                HipChatRequestHandler.__STORAGE = json.loads(" ".join(file.readlines()))
             return
 
         if post_data[0:5] == "erase":  # Erase storage
             self.log_message("Erasing storage")
-            HipChatRequestHandler.STORAGE = dict()
+            HipChatRequestHandler.__STORAGE = dict()
 
         try:  # Parse request from HipChat
             notification = Notification(**(json.loads(post_data)))
@@ -112,8 +112,8 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
             self.log_error("Integration '" + integration_name + "' could not be found")
             return
 
-        if integration_name not in HipChatRequestHandler.STORAGE:
-            HipChatRequestHandler.STORAGE[integration_name] = dict()
+        if integration_name not in HipChatRequestHandler.__STORAGE:
+            HipChatRequestHandler.__STORAGE[integration_name] = dict()
 
         current_token = None
         room_id = str(notification.item.room.id)
@@ -126,7 +126,7 @@ class HipChatRequestHandler(BaseHTTPRequestHandler):
                                            query=integration_query,
                                            all_tokens=integration_tokens,
                                            token=current_token,
-                                           storage=HipChatRequestHandler.STORAGE[integration_name],
+                                           storage=HipChatRequestHandler.__STORAGE[integration_name],
                                            log=Logger(self, integration_name, ref))
 
 
