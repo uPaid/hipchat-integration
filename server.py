@@ -7,11 +7,13 @@ from re import search
 
 from notification import Notification
 from threads import async
+from args import ServerArgumentsParser
 
 try:
-    port = int(sys.argv[1])
-    integrations_path = sys.argv[2]
-    tokens_from_args = sys.argv[3:]
+    parser = ServerArgumentsParser()
+    port = parser.port
+    integrations_path = parser.integrations_path
+    tokens_from_args = parser.tokens
     integration_tokens = dict()
     for token in tokens_from_args:
         token_split = token.split(":")
