@@ -5,9 +5,9 @@ import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from re import search
 
+from args import ServerArgumentsParser
 from notification import Notification
 from threads import async
-from args import ServerArgumentsParser
 
 try:
     parser = ServerArgumentsParser()
@@ -52,11 +52,23 @@ class Logger:
 class HipChatRequestHandler(BaseHTTPRequestHandler):
     __STORAGE = dict()
 
+    def __init__(self, request, client_address, server):
+        super().__init__(request, client_address, server)
+
     def log_message(self, format, *args):  # We want to log messages to stdout instead of stderr
-        sys.stdout.write("%s - - [%s] %s\n" %
-                         (self.address_string(),
-                          self.log_date_time_string(),
-                          format % args))
+        self.__log(sys.stdout, format, *args)
+
+    def log_error(self, format, *args):
+        self.__log(sys.stdout, format, *args)  # TODO: stderr doesn't work for some reason
+
+    def __log(self, output_stream, format, *args):
+        output_stream.write("%s - - [%s] %s\n" %
+                            (self.address_string(),
+                             self.log_date_time_string(),
+                             format % args))
+        flush = getattr(sys.stdout, "flush", None)
+        if callable(flush):
+            flush()
 
     def do_POST(self):
         post_data = self.get_post_data()
