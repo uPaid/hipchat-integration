@@ -57,14 +57,11 @@ ssh username@my.server.com "python3 /opt/app/hipchat-integration/hipchat-integra
 
 ### Running the app
 
-If arguments are invalid, application will print the following message:
-
-> Usage: python3 'hipchat-integration.zip' [PORT] [INTEGRATIONS_PATH] [INTEGRATION_NAME:INTEGRATION_TOKEN...]
-
-Arguments must be provided in the following order:
-* **PORT** - the port for application to listen on
-* **INTEGRATIONS_PATH** - the path where integrations scripts are stored at
-* **INTEGRATION_NAME:INTEGRATION_TOKEN...** - a list of tokens in one of the following formats:
+Following arguments are supported:
+* **--port** - the port for application to listen on
+* **--integrations** - the path where integrations scripts are stored at
+* **--logfile** - the path of a file to which logs should be printed
+* **--tokens** - a list of tokens in one of the following formats:
   * **TOKEN_NAME:TOKEN_VALUE** - a global token
   * **ROOM_ID:INTEGRATION_NAME:TOKEN_VALUE** - integration-specific token (*ROOM_ID* must be numerical)
 
@@ -73,14 +70,18 @@ For more details please refer to the [HipChat dokumentation on tokens](https://d
 #### Example
 
 ```bash
-python3 hipchat-integration.zip 8000 ./integrations \
-    1234:test:2YotnFZFEjr1zCsicMWpAA \
-    send_message:2YotnFZFEjr1zCsicMWpAA
+python3 'hipchat-integration.zip' \
+    --port=8000 \
+    --integrations=./integrations \
+    --logfile=hipchat-integration.log \
+    --tokens 1234:test:2YotnFZFEjr1zCsicMWpAA \
+             send_message:2YotnFZFEjr1zCsicMWpAA
 ```
 
 The application will:
 * listen on port 8000
 * look for available integrations in directory *integrations*
+* print logs into a file *hipchat-integrations.log*
 * store two tokens:
   * token assigned to a room with if *1234* and integration *test* in that room
   * global token called *send_message*
@@ -97,7 +98,7 @@ The integration must follow the rules below:
   * **notification** *(notification.Notification)* - the [object sent by HipChat API](https://www.hipchat.com/docs/apiv2/webhooks#room_message)
   * **query** *(str)* - integration command's contents
   * **all_tokens** *(dict)* - all tokens passed to the application
-  * **token** *(str)* - token for the current room (room in which slashcommand was executed)
+  * **token** *(str)* - token for the current
   * **storage** *(dict)* - volatile, integration-specific storage that can be used to persist data (note that it is kept in memory and will be erased if the application is killed, please refer to the [data persistance](#data-persistance) section of this manual for more details)
   * **log** *(server.Logger)* - a utility that can be used for printing the output in place of the *print()* function
 
@@ -114,9 +115,7 @@ To put a variable in the storage, call `storage[key] = variable` from your integ
 
 To retrieve a variable from the storage, call `variable = storage[key]` from your integration.
 
-Storages are created per integration, so you don't have to worry about conflicting keys.
-
-Keep in mind that if the data is not found in the storage, a `KeyError` will be raised.
+Keep in mind that if the is is not found in the storage, a `KeyError` will be raised.
 
 #### Saving and loading the storage
 
